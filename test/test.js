@@ -5,7 +5,7 @@ test('Selector is object', function () {
 })
 
 test('dom function', function () {
-  var els = dom($('.list')).find('li')
+  var els = dom('.list').find('li')
   ok(typeof els === 'object')
   els.each(function (el) {
     el.innerHTML = 'done'
@@ -14,20 +14,20 @@ test('dom function', function () {
 })
 
 test('attr', function () {
-  dom($('body')).attr('what', 'wg')
-  ok(dom($('body')).attr('what') === 'wg')
+  dom('body').attr('what', 'wg')
+  ok(dom('body').attr('what') === 'wg')
 
-  dom($('.list')).attr('hi', false)
-  ok(dom($('.list')).attr('hi') == false)
+  dom('.list').attr('hi', false)
+  ok(dom('.list').attr('hi') == false)
 })
 
 test('classList', function () {
-  dom($('body')).addClass('what is bad')
+  dom('body').addClass('what is bad')
   ok($('body').className === 'what is bad')
 
-  dom($('body')).removeClass('what is')
+  dom('body').removeClass('what is')
   ok($('body').className === 'bad')
 
-  dom($('body')).toggleClass('bad')
+  dom('body').toggleClass('bad')
   ok(!$('body').className)
 })

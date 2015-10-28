@@ -7,6 +7,8 @@
   }
 
   function DOM (el) {
+    this.name = el
+    el = $$(el)
     if (!el) {
       console.error('cannot find element', el)
       return
@@ -16,24 +18,28 @@
 
   DOM.prototype = {
     constructor: DOM,
-    each: function (fn) {
-      if (checkDOMType(this.el, 'NodeList')) {
-        Array.prototype.forEach.call(this.el, fn)
+    each: function (els, fn) {
+      if (typeof els === 'function') {
+        fn = els
+        els = this.el
+      }
+      if (checkDOMType(els, 'NodeList')) {
+        Array.prototype.forEach.call(els, fn)
       } else {
-        fn(this.el)
+        fn(this.els)
       }
       return this
     },
     find: function (selector) {
-      this.el = this.el.querySelectorAll(selector)
+      this.el = this.el[0].querySelectorAll(selector)
       return this
     },
     attr: function (key, value) {
       if (key && value || key && Boolean(value) === value) {
-        this.el.setAttribute(key, value)
+        this.el[0].setAttribute(key, value)
         return this
       } else {
-        var attr = this.el.getAttribute(key)
+        var attr = this.el[0].getAttribute(key)
 
         if (attr === 'true') {
           return true
@@ -45,30 +51,40 @@
       }
     },
     addClass: function (classList) {
-      this.el.className = this.el.className ? this.el.className + ' ' + classList : classList
-      return this
+      this.each(this.el, function (el) {
+        el.className = el.className ? el.className + ' ' + classList : classList
+        return this
+      }.bind(this))
+
     },
     removeClass: function (classList) {
-      if (!this.el.className) {
-        return this
-      }
-      classList = classList.split(' ')
-      classList.forEach(function (className) {
-        if (this.el.classList.contains(className)) {
-          this.el.classList.remove(className)
+      this.each(this.el, function (el) {
+        if (!el.className) {
+          return this
         }
+        classList = classList.split(' ')
+        classList.forEach(function (className) {
+          if (el.classList.contains(className)) {
+            el.classList.remove(className)
+          }
+        }.bind(this))
+        return this
       }.bind(this))
-      return this
+
     },
     toggleClass: function (classList) {
+
       classList = classList.split(' ')
-      classList.forEach(function (className) {
-        if (this.el.classList.contains(className)) {
-          this.el.classList.remove(className)
-        } else {
-          this.el.classList.add(className)
-        }
+      this.each(this.el, function (el) {
+        classList.forEach(function (className) {
+          if (el.classList.contains(className)) {
+            el.classList.remove(className)
+          } else {
+            el.classList.add(className)
+          }
+        }.bind(this))
       }.bind(this))
+
     }
   }
 

@@ -25,6 +25,9 @@ import { $, $$, dom } from 'jshit'
 - $(element)
 - $$(elements)
 - dom.find(element)
+
+  like `dom('.list').find('li')`
+
 - dom.each(fn)
 - dom.attr(key[, value])
 - dom.addClass(classList)
