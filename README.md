@@ -34,6 +34,7 @@ import { $, $$, dom } from 'jshit'
 - dom.addClass(classList)
 - dom.removeClass(classList)
 - dom.toggleClass(classList)
+- dom.append/prepend(html)
 
 ## License
 
