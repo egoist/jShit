@@ -53,14 +53,14 @@
     addClass: function (classList) {
       this.each(this.el, function (el) {
         el.className = el.className ? el.className + ' ' + classList : classList
-        return this
-      }.bind(this))
 
+      }.bind(this))
+      return this
     },
     removeClass: function (classList) {
       this.each(this.el, function (el) {
         if (!el.className) {
-          return this
+          return
         }
         classList = classList.split(' ')
         classList.forEach(function (className) {
@@ -68,12 +68,10 @@
             el.classList.remove(className)
           }
         }.bind(this))
-        return this
       }.bind(this))
-
+      return this
     },
     toggleClass: function (classList) {
-
       classList = classList.split(' ')
       this.each(this.el, function (el) {
         classList.forEach(function (className) {
@@ -84,7 +82,29 @@
           }
         }.bind(this))
       }.bind(this))
-
+      return this
+    },
+    remove: function () {
+      this.each(this.el, function (el) {
+        el.parentNode.removeChild(el)
+      }.bind(this))
+      return this
+    },
+    insertHTML: function (html, type) {
+      this.each(this.el, function (el) {
+        if (type === 'append') {
+          el.innerHTML = el.innerHTML + html
+        } else if (type === 'prepend') {
+          el.innerHTML = html + el.innerHTML
+        }
+      }.bind(this))
+      return this
+    },
+    append: function (html) {
+      this.insertHTML(html, 'append')
+    },
+    prepend: function (html){
+      this.insertHTML(html, 'prepend')
     }
   }
 

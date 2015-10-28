@@ -31,3 +31,18 @@ test('classList', function () {
   dom('body').toggleClass('bad')
   ok(!$('body').className)
 })
+
+test('remove', function () {
+  dom('.list').remove()
+  ok(!$('.list'))
+})
+
+test('append', function () {
+  dom('body').append('<p class="wow">text node</p>')
+  ok($('.wow'))
+})
+
+test('prepend', function () {
+  dom('body').prepend('<p class="wowp">text node</p>')
+  ok($('.wowp'))
+})
