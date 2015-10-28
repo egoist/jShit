@@ -38,7 +38,7 @@ $$('elements')
 ### Search
 
 ```javascript
-// .find is a short hand for querySelectors in its parent element
+// .find is a short hand for querySelectorAll in its parent element
 // it works for `dom` function set globally by jShit
 var el = dom($('element'))
 el.find('li')
