@@ -145,7 +145,7 @@
   }
 
   function domEach (els, fn) {
-    if (checkDOMType(els, 'NodeList')) {
+    if (checkDOMType(els, 'NodeList') || checkDOMType(els, 'Array')) {
       Array.prototype.forEach.call(els, fn)
     } else {
       fn(els)

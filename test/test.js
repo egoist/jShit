@@ -49,4 +49,8 @@ test('prepend', function () {
 
 test('get by attr', function () {
   ok(dom('body [hell=yeah]'))
+  dom('body').attr('a', 'b')
+  dom('body [a=b]').each(function (el) {
+    console.log(this)
+  })
 })
