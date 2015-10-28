@@ -26,10 +26,10 @@ import { $, $$, dom } from 'jshit'
 
 ```javascript
 // for a single dom element
-$('elmement')
+$('element')
 
 // for a dom array
-$$('elemements')
+$$('elements')
 
 // remember that $/$$ is just a shorthand
 // for document.querySelector/querySelectorAll
