@@ -25,10 +25,10 @@ import { $, $$, dom } from 'jshit'
 - $(element)
 - $$(elements)
 
-`$/$$` is just a shorthand for `document.querySelector/document.querySelectorAll`
+  `$/$$` is just a shorthand for `document.querySelector/document.querySelectorAll`
 - dom.find(element)
 
-like `dom('.list').find('li')`
+  like `dom('.list').find('li')`
 - dom.each(fn)
 - dom.attr(key[, value])
 - dom.addClass(classList)
