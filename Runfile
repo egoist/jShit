@@ -10,3 +10,7 @@ task.add('git', () => {
 task.add('publish', () => {
   exec('npm publish')
 })
+
+task.add('serve', () => {
+  exec('surge --domain jshit.surge.sh')
+})

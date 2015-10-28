@@ -22,41 +22,14 @@ import { $, $$, dom } from 'jshit'
 
 ## API
 
-### Selector
-
-```javascript
-// for a single dom element
-$('element')
-
-// for a dom array
-$$('elements')
-
-// remember that $/$$ is just a shorthand
-// for document.querySelector/querySelectorAll
-```
-
-### Search
-
-```javascript
-// .find is a short hand for querySelectorAll in its parent element
-// it works for `dom` function set globally by jShit
-var el = dom($('element'))
-el.find('li')
-// return something like : DOM {el: NodeList[5]}
-// which is your `li` array
-```
-
-## Loop
-
-```javascript
-// if you got a dom array using $$
-// for using dom.find() method
-// you can iterate over each dom element
-var els = dom($('element')).find('li')
-els.each(function (el, index) {
-  console.log(el, index)
-})
-```
+- $(element)
+- $$(elements)
+- dom.find(element)
+- dom.each(fn)
+- dom.attr(key[, value])
+- dom.addClass(classList)
+- dom.removeClass(classList)
+- dom.toggleClass(classList)
 
 ## License
 
