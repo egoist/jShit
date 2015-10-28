@@ -46,3 +46,7 @@ test('prepend', function () {
   dom('body').prepend('<p class="wowp">text node</p>')
   ok($('.wowp'))
 })
+
+test('get by attr', function () {
+  ok(dom('body [hell=yeah]'))
+})

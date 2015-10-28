@@ -8,7 +8,24 @@
 
   function DOM (el) {
     this.name = el
-    el = $$(el)
+    var attrIndex = el.indexOf('[')
+    var attrRe = /\[\S+\]/
+    if (attrIndex > 0 && attrRe.test(el)) {
+      el = el.substring(0, attrIndex).trim()
+      var attrAll = this.name.match(attrRe)[0]
+      attrAll = attrAll.substring(1, attrAll.length - 1)
+      var attrKey = attrAll.split('=')[0].trim()
+      var attrValue = attrAll.split('=')[1].trim()
+      var matches = []
+      domEach($$(el), function (el) {
+        if (attr(el, attrKey) === attrValue) {
+          matches.push(el)
+        }
+      })
+      el = matches
+    } else {
+      el = $$(el)
+    }
     if (!el) {
       console.error('cannot find element', el)
       return
@@ -18,16 +35,8 @@
 
   DOM.prototype = {
     constructor: DOM,
-    each: function (els, fn) {
-      if (typeof els === 'function') {
-        fn = els
-        els = this.el
-      }
-      if (checkDOMType(els, 'NodeList')) {
-        Array.prototype.forEach.call(els, fn)
-      } else {
-        fn(this.els)
-      }
+    each: function (fn) {
+      domEach(this.el, fn)
       return this
     },
     find: function (selector) {
@@ -35,30 +44,22 @@
       return this
     },
     attr: function (key, value) {
-      if (key && value || key && Boolean(value) === value) {
-        this.el[0].setAttribute(key, value)
+      if (value) {
+        attr(this.el[0], key, value)
         return this
       } else {
-        var attr = this.el[0].getAttribute(key)
-
-        if (attr === 'true') {
-          return true
-        } else if (attr === 'false') {
-          return false
-        }
-
-        return attr
+        return attr(this.el[0], key, value)
       }
     },
     addClass: function (classList) {
-      this.each(this.el, function (el) {
+      this.each(function (el) {
         el.className = el.className ? el.className + ' ' + classList : classList
 
       }.bind(this))
       return this
     },
     removeClass: function (classList) {
-      this.each(this.el, function (el) {
+      this.each(function (el) {
         if (!el.className) {
           return
         }
@@ -73,7 +74,7 @@
     },
     toggleClass: function (classList) {
       classList = classList.split(' ')
-      this.each(this.el, function (el) {
+      this.each(function (el) {
         classList.forEach(function (className) {
           if (el.classList.contains(className)) {
             el.classList.remove(className)
@@ -85,13 +86,13 @@
       return this
     },
     remove: function () {
-      this.each(this.el, function (el) {
+      this.each(function (el) {
         el.parentNode.removeChild(el)
       }.bind(this))
       return this
     },
     insertHTML: function (html, type) {
-      this.each(this.el, function (el) {
+      this.each(function (el) {
         if (type === 'append') {
           el.innerHTML = el.innerHTML + html
         } else if (type === 'prepend') {
@@ -125,6 +126,30 @@
       }
     }
     return false
+  }
+
+  function attr (el, key, value) {
+    if (key && value || key && Boolean(value) === value) {
+      el.setAttribute(key, value)
+    } else {
+      var attrValue = el.getAttribute(key)
+
+      if (attrValue === 'true') {
+        return true
+      } else if (attrValue === 'false') {
+        return false
+      }
+
+      return attrValue
+    }
+  }
+
+  function domEach (els, fn) {
+    if (checkDOMType(els, 'NodeList')) {
+      Array.prototype.forEach.call(els, fn)
+    } else {
+      fn(els)
+    }
   }
 
   if (typeof W !== 'undefined') {
