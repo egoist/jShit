@@ -1,6 +1,6 @@
 # jShit
 
-🚧 WIP. The last library for dirty DOM manipulations if you can avoid that.
+🚧 WIP. The last library for dirty DOM manipulations if you cannot avoid that.
 
 ## Install
 
